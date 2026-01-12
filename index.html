@@ -70,7 +70,7 @@
 
         .btn-start {
             padding: 16px 55px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             background: #ffc100;
             color: var(--primary-color);
             border: none;
@@ -90,6 +90,9 @@
         }
 
         /* --- KHÔNG GIAN NỘI DUNG CHÍNH --- */
+        .thank-you-visible .main-wrapper {
+          padding: 60px 16px;
+        }
         .main-wrapper {
             padding: 60px 20px;
             display: flex;
@@ -107,7 +110,7 @@
             max-width: 750px;
             width: 100%;
             background: var(--white);
-            padding: 50px;
+            padding: 30px 16px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.06);
             transition: all 0.5s ease;
@@ -122,7 +125,7 @@
 
         header h1 { 
             color: var(--primary-color); 
-            font-size: 1.6rem; 
+            font-size: 1.3rem; 
             margin: 0;
             letter-spacing: 1px;
         }
@@ -211,8 +214,10 @@
         #thank-you-container { 
             display: none; 
             text-align: center; 
-            padding: 80px 40px;
+            padding: 30px 16px;
             opacity: 0;
+            margin: auto 0;
+            box-sizing: border-box;
         }
 
         .thank-you-icon { 
@@ -238,15 +243,27 @@
             color: var(--primary-color);
         }
         .hidden { display: none !important; }
+        .thank-you-visible, .thank-you-visible .main-wrapper {
+            overflow: hidden;
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 600px) {
-            .container { padding: 30px 20px; }
-            header h1 { font-size: 1.3rem; }
+        @media (min-width: 768px) {
+          .container { padding: 50px; }
+          header h1 { font-size: 1.6rem; }
+          .btn-start {
+            font-size: 1.1rem;
+          }
+          #thank-you-container { 
+            padding: 80px 40px;
+         }
+         .thank-you-visible .main-wrapper {
+          padding: 60px 24px;
+        }
         }
     </style>
 </head>
@@ -399,6 +416,7 @@
         setTimeout(() => {
             formContainer.style.display = 'none';
             thankYouContainer.style.display = 'block';
+            document.body.classList.add('thank-you-visible');
             window.scrollTo(0, 0);
             setTimeout(() => { 
                 thankYouContainer.style.opacity = '1'; 
