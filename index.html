@@ -10,32 +10,23 @@
             --accent-color: #d4af37;
             --bg-color: #f8f9fa;
             --text-color: #333;
+            --disabled-color: #ccc;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
             margin: 0;
             padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
             background: #fff;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: opacity 0.5s ease;
-        }
-
-        /* Container cảm ơn ẩn mặc định */
-        #thank-you-container {
-            display: none;
-            text-align: center;
-            padding: 60px 40px;
         }
 
         header {
@@ -45,190 +36,203 @@
             padding-bottom: 20px;
         }
 
-        h1 { color: var(--primary-color); margin: 0; text-transform: uppercase; }
-        .subtitle { font-style: italic; color: #666; }
+        .step { display: none; }
+        .step.active { display: block; }
 
-        .question-block {
-            margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 8px;
-        }
+        .question-block { margin-bottom: 25px; }
+        .question-text { font-weight: 600; display: block; margin-bottom: 12px; }
 
-        .question-text { font-weight: 600; font-size: 1.1em; margin-bottom: 15px; display: block; }
-
-        .options-group { display: flex; flex-direction: column; gap: 12px; }
-
+        .options-group { display: flex; flex-direction: column; gap: 10px; }
         .option-item {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            transition: all 0.2s;
+            display: flex; align-items: center; cursor: pointer;
+            padding: 12px; border: 1px solid #ddd; border-radius: 8px;
+            transition: 0.2s;
         }
+        .option-item:hover { background-color: #f0f4f8; }
+        input[type="radio"]:checked + span { font-weight: bold; }
+        input[type="radio"] { margin-right: 12px; accent-color: var(--primary-color); }
 
-        .option-item:hover { border-color: var(--primary-color); background-color: #eef2f7; }
-
-        input[type="radio"] { margin-right: 15px; accent-color: var(--primary-color); width: 18px; height: 18px; }
-
+        .footer-nav { margin-top: 30px; text-align: center; }
+        
         button {
-            display: block; width: 100%; padding: 15px; background-color: var(--primary-color);
-            color: white; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold;
-            cursor: pointer; margin-top: 20px;
+            padding: 15px 40px; border-radius: 6px; border: none;
+            font-size: 1em; font-weight: bold; cursor: pointer;
+            transition: 0.3s; width: 100%;
         }
 
-        .thank-you-icon {
-            font-size: 50px;
-            color: var(--accent-color);
-            margin-bottom: 20px;
+        .btn-next, .btn-submit { background-color: var(--primary-color); color: white; }
+        
+        /* Trạng thái nút bị khóa */
+        button:disabled {
+            background-color: var(--disabled-color);
+            cursor: not-allowed;
+            opacity: 0.6;
         }
 
-        .btn-reset {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            margin-top: 30px;
-            width: auto;
-            display: inline-block;
-            padding: 10px 30px;
-        }
+        #thank-you { text-align: center; display: none; padding: 40px 0; }
+        .icon { font-size: 50px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container" id="form-container">
+<div class="container" id="main-card">
     <header>
-        <h1>LPBS — VÔ TƯ & KIÊU HÃNH</h1>
-        <p class="subtitle">The Companion Questions - Hành trình 2025</p>
+        <h2 style="color: var(--primary-color); margin:0;">LPBS — VÔ TƯ & KIÊU HÃNH</h2>
+        <small id="step-indicator">Bước 1/2</small>
     </header>
 
     <form id="lpbsForm">
-        <div class="question-block">
-            <span class="question-text">1. Điều gì đã giữ bạn ở lại trong năm 2025?</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q1" value="A"> A. Niềm tin rằng hành trình này xứng đáng.</label>
-                <label class="option-item"><input type="radio" name="q1" value="B"> B. Những con người đã chọn đồng hành cùng mình.</label>
-                <label class="option-item"><input type="radio" name="q1" value="C"> C. Cảm giác rằng mình đang góp mặt trong một câu chuyện lớn.</label>
+        <div class="step active" id="step1">
+            <div class="question-block">
+                <span class="question-text">1. Điều gì đã giữ bạn ở lại trong năm 2025?</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q1" value="A"> <span>A. Niềm tin rằng hành trình này xứng đáng.</span></label>
+                    <label class="option-item"><input type="radio" name="q1" value="B"> <span>B. Những con người đã chọn đồng hành cùng mình.</span></label>
+                    <label class="option-item"><input type="radio" name="q1" value="C"> <span>C. Cảm giác rằng mình đang góp mặt trong một câu chuyện lớn.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">2. Khi mọi thứ khó khăn nhất, bạn đã chọn…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q2" value="A"> <span>A. Tiếp tục bước tiếp, dù chưa thấy con đường.</span></label>
+                    <label class="option-item"><input type="radio" name="q2" value="B"> <span>B. Dựa vào đồng đội để không bỏ cuộc.</span></label>
+                    <label class="option-item"><input type="radio" name="q2" value="C"> <span>C. Tin rằng mọi thử thách rồi cũng sẽ thành một chương đáng nhớ.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">3. Với bạn, “Đồng hành” nghĩa là…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q3" value="A"> <span>A. Không để ai phải đi một mình.</span></label>
+                    <label class="option-item"><input type="radio" name="q3" value="B"> <span>B. Cùng nhau gánh vác những ngày nặng nề nhất.</span></label>
+                    <label class="option-item"><input type="radio" name="q3" value="C"> <span>C. Ở bên nhau đủ lâu để thấy nhau trưởng thành.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">4. “Vô tư” trong công việc, theo bạn là…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q4" value="A"> <span>A. Làm hết lòng mà không so đo thiệt hơn.</span></label>
+                    <label class="option-item"><input type="radio" name="q4" value="B"> <span>B. Dám cho đi trước khi nghĩ đến nhận lại.</span></label>
+                    <label class="option-item"><input type="radio" name="q4" value="C"> <span>C. Giữ cho mình trong sáng giữa rất nhiều áp lực.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">5. “Kiêu hãnh” trong LPBS được thể hiện qua…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q5" value="A"> <span>A. Tinh thần đã làm thì làm cho ra làm.</span></label>
+                    <label class="option-item"><input type="radio" name="q5" value="B"> <span>B. Trách nhiệm với từng quyết định mình chọn.</span></label>
+                    <label class="option-item"><input type="radio" name="q5" value="C"> <span>C. Không bỏ cuộc dù đường đi không hề dễ.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">6. Khoảnh khắc nào của 2025 khiến bạn thấy mình thật sự thuộc về nơi này?</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q6" value="A"> <span>A. Khi cùng nhau vượt qua một giai đoạn rất khó.</span></label>
+                    <label class="option-item"><input type="radio" name="q6" value="B"> <span>B. Khi nhìn lại và thấy mình đã mạnh hơn.</span></label>
+                    <label class="option-item"><input type="radio" name="q6" value="C"> <span>C. Khi nhận ra: đây không chỉ là nơi làm việc.</span></label>
+                </div>
+            </div>
+
+            <div class="footer-nav">
+                <button type="button" id="nextBtn" class="btn-next" disabled>Tiếp theo</button>
             </div>
         </div>
 
-        <div class="question-block">
-            <span class="question-text">2. Khi mọi thứ khó khăn nhất, bạn đã chọn…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q2" value="A"> A. Tiếp tục bước tiếp, dù chưa thấy con đường.</label>
-                <label class="option-item"><input type="radio" name="q2" value="B"> B. Dựa vào đồng đội để không bỏ cuộc.</label>
-                <label class="option-item"><input type="radio" name="q2" value="C"> C. Tin rằng mọi thử thách rồi cũng sẽ thành một chương đáng nhớ.</label>
+        <div class="step" id="step2">
+            <div class="question-block">
+                <span class="question-text">7. Khi nhìn vào tập thể LPBS hôm nay, bạn thấy…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q7" value="A"> <span>A. Một đội ngũ đã lớn lên rất nhiều.</span></label>
+                    <label class="option-item"><input type="radio" name="q7" value="B"> <span>B. Một hệ thống mới đang thành hình.</span></label>
+                    <label class="option-item"><input type="radio" name="q7" value="C"> <span>C. Một gia đình đã cùng nhau đi qua bão tố.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">8. Điều khiến bạn tự hào nhất khi nhắc đến LPBS 2025 là…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q8" value="A"> <span>A. Những kết quả đã đạt được.</span></label>
+                    <label class="option-item"><input type="radio" name="q8" value="B"> <span>B. Những con người đã cùng nhau đi đến đây.</span></label>
+                    <label class="option-item"><input type="radio" name="q8" value="C"> <span>C. Phiên bản LPBS rất khác đã được sinh ra.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">9. Nếu phải chọn một từ cho hành trình 2025 của mình…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q9" value="A"> <span>A. Can đảm.</span></label>
+                    <label class="option-item"><input type="radio" name="q9" value="B"> <span>B. Bền bỉ.</span></label>
+                    <label class="option-item"><input type="radio" name="q9" value="C"> <span>C. Đáng nhớ.</span></label>
+                </div>
+            </div>
+            <div class="question-block">
+                <span class="question-text">10. Khi nghĩ về chặng đường phía trước, bạn tin rằng…</span>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q10" value="A"> <span>A. Chúng ta mới chỉ bắt đầu.</span></label>
+                    <label class="option-item"><input type="radio" name="q10" value="B"> <span>B. Không có giới hạn nào nếu còn giữ được tinh thần hôm nay.</span></label>
+                    <label class="option-item"><input type="radio" name="q10" value="C"> <span>C. Câu chuyện LPBS sẽ còn rực rỡ hơn rất nhiều.</span></label>
+                </div>
+            </div>
+
+            <div class="footer-nav">
+                <button type="submit" id="submitBtn" class="btn-submit" disabled>Hoàn tất & Gửi</button>
             </div>
         </div>
-
-        <div class="question-block">
-            <span class="question-text">3. Với bạn, “Đồng hành” nghĩa là…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q3" value="A"> A. Không để ai phải đi một mình.</label>
-                <label class="option-item"><input type="radio" name="q3" value="B"> B. Cùng nhau gánh vác những ngày nặng nề nhất.</label>
-                <label class="option-item"><input type="radio" name="q3" value="C"> C. Ở bên nhau đủ lâu để thấy nhau trưởng thành.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <span class="question-text">4. “Vô tư” trong công việc, theo bạn là…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q4" value="A"> A. Làm hết lòng mà không so đo thiệt hơn.</label>
-                <label class="option-item"><input type="radio" name="q4" value="B"> B. Dám cho đi trước khi nghĩ đến nhận lại.</label>
-                <label class="option-item"><input type="radio" name="q4" value="C"> C. Giữ cho mình trong sáng giữa rất nhiều áp lực.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <span class="question-text">5. “Kiêu hãnh” trong LPBS được thể hiện qua…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q5" value="A"> A. Tinh thần đã làm thì làm cho ra làm.</label>
-                <label class="option-item"><input type="radio" name="q5" value="B"> B. Trách nhiệm với từng quyết định mình chọn.</label>
-                <label class="option-item"><input type="radio" name="q5" value="C"> C. Không bỏ cuộc dù đường đi không hề dễ.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <span class="question-text">6. Khoảnh khắc nào của 2025 khiến bạn thấy mình thật sự thuộc về nơi này?</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q6" value="A"> A. Khi cùng nhau vượt qua một giai đoạn rất khó.</label>
-                <label class="option-item"><input type="radio" name="q6" value="B"> B. Khi nhìn lại và thấy mình đã mạnh hơn.</label>
-                <label class="option-item"><input type="radio" name="q6" value="C"> C. Khi nhận ra: đây không chỉ là nơi làm việc.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <span class="question-text">7. Khi nhìn vào tập thể LPBS hôm nay, bạn thấy…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q7" value="A"> A. Một đội ngũ đã lớn lên rất nhiều.</label>
-                <label class="option-item"><input type="radio" name="q7" value="B"> B. Một hệ thống mới đang thành hình.</label>
-                <label class="option-item"><input type="radio" name="q7" value="C"> C. Một gia đình đã cùng nhau đi qua bão tố.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <span class="question-text">8. Điều khiến bạn tự hào nhất khi nhắc đến LPBS 2025 là…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q8" value="A"> A. Những kết quả đã đạt được.</label>
-                <label class="option-item"><input type="radio" name="q8" value="B"> B. Những con người đã cùng nhau đi đến đây.</label>
-                <label class="option-item"><input type="radio" name="q8" value="C"> C. Phiên bản LPBS rất khác đã được sinh ra.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <span class="question-text">9. Nếu phải chọn một từ cho hành trình 2025 của mình…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q9" value="A"> A. Can đảm.</label>
-                <label class="option-item"><input type="radio" name="q9" value="B"> B. Bền bỉ.</label>
-                <label class="option-item"><input type="radio" name="q9" value="C"> C. Đáng nhớ.</label>
-            </div>
-        </div>
-
-        <div class="question-block">
-            <span class="question-text">10. Khi nghĩ về chặng đường phía trước, bạn tin rằng…</span>
-            <div class="options-group">
-                <label class="option-item"><input type="radio" name="q10" value="A"> A. Chúng ta mới chỉ bắt đầu.</label>
-                <label class="option-item"><input type="radio" name="q10" value="B"> B. Không có giới hạn nào nếu còn giữ được tinh thần hôm nay.</label>
-                <label class="option-item"><input type="radio" name="q10" value="C"> C. Câu chuyện LPBS sẽ còn rực rỡ hơn rất nhiều.</label>
-            </div>
-        </div>
-
-        <button type="submit">Gửi câu trả lời của bạn</button>
     </form>
-</div>
 
-<div class="container" id="thank-you-container">
-    <div class="thank-you-icon">✨</div>
-    <h1>Cảm ơn bạn!</h1>
-    <p>Hành trình 2025 của LPBS trở nên rực rỡ hơn nhờ có sự góp mặt của bạn.</p>
-    <p>Câu trả lời của bạn đã được ghi nhận một cách trân trọng.</p>
-    <button class="btn-reset" onclick="window.location.reload()">Gửi phản hồi khác</button>
+    <div id="thank-you">
+        <div class="icon">🏆</div>
+        <h2 style="color: var(--primary-color);">Cảm ơn bạn đã đồng hành cùng LPB!</h2>
+        <p>Hành trình "Vô tư & Kiêu hãnh" của chúng ta <br> sẽ thêm phần rực rỡ nhờ những chia sẻ từ bạn.</p>
+        <button onclick="location.reload()" style="width:auto; background:none; color: gray; text-decoration: underline; font-size: 0.8em;">Gửi lại phản hồi</button>
+    </div>
 </div>
 
 <script>
-    document.getElementById('lpbsForm').addEventListener('submit', function(e) {
+    const form = document.getElementById('lpbsForm');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const indicator = document.getElementById('step-indicator');
+    const thankYou = document.getElementById('thank-you');
+
+    // Hàm kiểm tra xem một nhóm câu hỏi đã được chọn đủ chưa
+    function checkCompletion(start, end) {
+        let completed = 0;
+        for (let i = start; i <= end; i++) {
+            if (document.querySelector(`input[name="q${i}"]:checked`)) {
+                completed++;
+            }
+        }
+        return completed === (end - start + 1);
+    }
+
+    // Lắng nghe sự thay đổi trên form
+    form.addEventListener('change', () => {
+        // Kiểm tra step 1 (câu 1-6)
+        nextBtn.disabled = !checkCompletion(1, 6);
+        
+        // Kiểm tra step 2 (câu 7-10)
+        submitBtn.disabled = !checkCompletion(7, 10);
+    });
+
+    // Xử lý nút Tiếp theo
+    nextBtn.addEventListener('click', () => {
+        step1.classList.remove('active');
+        step2.classList.add('active');
+        indicator.innerText = "Bước 2/2";
+        window.scrollTo(0, 0);
+    });
+
+    // Xử lý Submit
+    form.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        // Thu thập dữ liệu (có thể dùng để gửi lên server)
-        const formData = new FormData(this);
-        console.log('Dữ liệu đã thu thập:', Object.fromEntries(formData));
-
-        // Thực hiện chuyển đổi giao diện
-        const formContainer = document.getElementById('form-container');
-        const thankYouContainer = document.getElementById('thank-you-container');
-
-        // Hiệu ứng ẩn dần và hiện dần
-        formContainer.style.opacity = '0';
+        // Hiệu ứng chuyển cảnh
+        form.style.display = 'none';
+        indicator.style.display = 'none';
+        thankYou.style.display = 'block';
         
-        setTimeout(() => {
-            formContainer.style.display = 'none';
-            thankYouContainer.style.display = 'block';
-            // Nhấn mạnh hiệu ứng xuất hiện
-            setTimeout(() => {
-                thankYouContainer.style.opacity = '1';
-            }, 50);
-        }, 500);
+        const data = new FormData(form);
+        console.log("Dữ liệu gửi đi:", Object.fromEntries(data));
     });
 </script>
 
